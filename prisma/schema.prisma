@@ -1,0 +1,40 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Lead {
+  id          String   @id @default(uuid())
+  name        String
+  email       String
+  phone       String
+  company     String?
+  message     String
+  serviceType String   // e.g., consultancy, tents, ride-rent
+  status      String   @default("NEW") // NEW, CONTACTED, ARCHIVED
+  createdAt   DateTime @default(now())
+}
+
+model Activity {
+  id           String  @id
+  title        String
+  category     String  // outdoor, indoor, tents, consultancy
+  description  String
+  imageUrl     String?
+  priceUnit    String? // e.g., per sq ft, per unit
+  safetyRating String? // e.g., EN 15567
+}
+
+model Project {
+  id          String  @id @default(uuid())
+  title       String
+  location    String
+  description String
+  category    String  // outdoor, tents, consultancy
+  status      String  // Completed, Ongoing, Upcoming
+  imageUrl    String?
+}
